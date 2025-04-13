@@ -6,7 +6,7 @@ const Layout = ({arr}) => {
      {
         arr.map((item,index)=>
             {
-                return <div key={index} className={`bg-blue-500 dark:bg-gray-300 w-10 rounded-sm transition-all duration-300 `}
+                return <div key={index} className={`bg-blue-500 dark:bg-gray-500 w-10 rounded-sm transition-all duration-300 `}
                 style={{ height: `${item}px`}}>
                         {item}
                 </div>
