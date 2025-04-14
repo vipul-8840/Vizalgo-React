@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useRef, useState } from 'react'
 import Layout from './layout';
 import Control from './control';
 import Dropdown from '../Dropdown/dropdown';
@@ -6,7 +6,8 @@ import DarkModeToggler from '../toggle';
 import { bubbleSort } from '../../algorithm/bubbleSort';
 
 const Home = () => {
-    const[arr,setArr]=useState([50,60,70,100]);
+    const[arr,setArr]=useState([100,60,80,50]);
+    const refs = useRef([]);
      const [selectedOption, setSelectedOption] = useState('Sorting');
      function handleNewArray()
      {
@@ -22,17 +23,27 @@ const Home = () => {
         switch(option)
         {
           case 'Bubble Sort': {
-                 console.log("called function")
+                 
                 const animationArr = bubbleSort(arr);
-                BubbleAnimation(animationArr);
+                console.log(animationArr);
+                bubbleAnimation(animationArr);
                break;
           }
           default :
                    return ;
         }
     };
-    function BubbleAnimation()
+    function bubbleAnimation(animation)
     {
+      console.log(refs);
+      
+      for(let i=0;i<animation.length;i++)
+      {
+           let [barOneInd,barTwoInd,swap]=animation[i];
+           let barOne = refs.current[barOneInd];
+           let barTwo = refs.current[barTwoInd];
+           barOne.style.backgroundColor = swap ?"red" :"yellow";
+      }
       console.log("bubble animation");
     }
   return (
@@ -43,7 +54,7 @@ const Home = () => {
                 <Dropdown selectedOption={selectedOption} handleOptionClick={handleOptionClick}/>
             </div>
               <div className="flex-grow flex justify-center items-center">
-                <Layout arr={arr} />
+                <Layout arr={arr} refs={refs} />
               </div>
        
       </div>
