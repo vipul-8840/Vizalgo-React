@@ -10,18 +10,11 @@ function App() {
   return (
     <ThemeProvider>
         
-         <div className='bg-white dark:bg-gray-700 dark:text-white text-black'>
-               <DarkModeToggler/> 
-                 <div className='flex flex-col min-h-screen justify-center items-center bg-white dark:bg-gray-700 dark:text-white text-black'>
-                    <h2 className='font-medium'>Tailwind Css Dark Mode</h2> 
-                    <p>CLick the button to toggle Dark Mode!</p>
+         <div className='bg-white dark:bg-gray-700 dark:text-white text-black min-h-screen'>
+                               
                       <Home/>
-                 </div>
-               
-
-               
                 
-            </div>
+          </div>
        
     </ThemeProvider>
   )
