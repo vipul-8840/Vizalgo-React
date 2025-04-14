@@ -41,10 +41,23 @@ const Home = () => {
       {
            let [barOneInd,barTwoInd,swap]=animation[i];
            let barOne = refs.current[barOneInd];
+           console.log(barOne);
            let barTwo = refs.current[barTwoInd];
-           barOne.style.backgroundColor = swap ?"red" :"yellow";
-      }
-      console.log("bubble animation");
+
+           setTimeout(()=>{
+            barOne.style.backgroundColor = swap ?"red" :"yellow";
+            barTwo.style.backgroundColor = swap ?"red" :"yellow";
+            if(swap)
+            {
+              let heightTemp = barOne.style.height;
+              barOne.style.height = barTwo.style.height;
+              barTwo.style.height= heightTemp;
+              const content = barOne.innerText;
+              barOne.innerText = barTwo.innerText;
+              barTwo.innerText = content;
+            }
+           },1000);
+      }    
     }
   return (
     <div lassName='min-h-screen'  >
