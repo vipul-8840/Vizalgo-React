@@ -6,7 +6,7 @@ export function bubbleSort(arr)
     let n = tempArray.length ;
     for(let i=0;i<n-1;i++)
     {
-        for(let j=0;j<n-1;j++)
+        for(let j=0;j<n-1-i;j++)
         {
             if(tempArray[j]>tempArray[j+1])
             {
@@ -21,7 +21,8 @@ export function bubbleSort(arr)
            
         }
     }
+       
    
-   return animation
+   return animation;
 
 }

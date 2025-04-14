@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import Layout from './layout';
 import Control from './control';
 import Dropdown from '../Dropdown/dropdown';
@@ -7,8 +7,21 @@ import { bubbleSort } from '../../algorithm/bubbleSort';
 
 const Home = () => {
     const[arr,setArr]=useState([100,60,80,50]);
+    const[userInputArray,setUserInputArray]=useState('');
     const refs = useRef([]);
-     const [selectedOption, setSelectedOption] = useState('Sorting');
+    const [selectedOption, setSelectedOption] = useState('Sorting');
+    useEffect(()=>{
+         const inputArray = userInputArray.split(',');
+         const filteredInput = inputArray.filter((item)=>{
+             if(!isNaN(item) && Number.isInteger(parseFloat(item)))
+              return item
+         }).map(item => Number(item) <= 500 && Number(item));
+         if (filteredInput.length > 0) {
+          setArr(filteredInput);
+        }
+
+    },[userInputArray])
+
      function handleNewArray()
      {
       console.log('handle call')
@@ -16,14 +29,32 @@ const Home = () => {
             return Math.floor(Math.random() * 500)
         })
         setArr(newArr)
-        console.log(arr);
+            setTimeout(() => {
+              refs.current.forEach((bar, idx) => {
+                  if (bar) {
+                      bar.style.height = `${newArr[idx]}px`;
+                      bar.innerText = newArr[idx];
+                      bar.style.backgroundColor = 'blue';
+                  }
+              });
+          }, 0);
      }
+     const resetBars = () => {
+      refs.current.forEach((bar, idx) => {
+          if (bar) {
+              bar.style.height = `${arr[idx]}px`;
+              bar.innerText = arr[idx];
+              bar.style.backgroundColor = 'blue';
+          }
+      });
+  };
+
      const handleOptionClick = (option) => {
-      console.log(option)
+      setSelectedOption(option);
         switch(option)
         {
           case 'Bubble Sort': {
-                 
+                  resetBars();
                 const animationArr = bubbleSort(arr);
                 console.log(animationArr);
                 bubbleAnimation(animationArr);
@@ -41,29 +72,42 @@ const Home = () => {
       {
            let [barOneInd,barTwoInd,swap]=animation[i];
            let barOne = refs.current[barOneInd];
-           console.log(barOne);
            let barTwo = refs.current[barTwoInd];
+           setTimeout(() => {
+            barOne.style.backgroundColor = swap ? 'red' : 'yellow';
+            barTwo.style.backgroundColor = swap ? 'red' : 'yellow';
 
-           setTimeout(()=>{
-            barOne.style.backgroundColor = swap ?"red" :"yellow";
-            barTwo.style.backgroundColor = swap ?"red" :"yellow";
-            if(swap)
-            {
-              let heightTemp = barOne.style.height;
-              barOne.style.height = barTwo.style.height;
-              barTwo.style.height= heightTemp;
-              const content = barOne.innerText;
-              barOne.innerText = barTwo.innerText;
-              barTwo.innerText = content;
+            if (swap) {
+                const tempHeight = barOne.style.height;
+                barOne.style.height = barTwo.style.height;
+                barTwo.style.height = tempHeight;
+
+                const tempText = barOne.innerText;
+                barOne.innerText = barTwo.innerText;
+                barTwo.innerText = tempText;
             }
-           },1000);
-      }    
-    }
+
+                  setTimeout(() => {
+                      barOne.style.backgroundColor = 'blue';
+                      barTwo.style.backgroundColor = 'blue';
+                  }, 500);
+              }, i * 500);
+            }
+      setTimeout(() => {
+        for (let i = 0; i < refs.current.length; i++) {
+            setTimeout(() => {
+                const bar = refs.current[i];
+                if (bar) bar.style.backgroundColor = 'green';
+            }, i * 100);
+        }
+    }, animation.length * 500 + 100);
+   };
+
   return (
-    <div lassName='min-h-screen'  >
+    <div className='min-h-screen'  >
             <div className='flex items-center gap-4 p-4 '>
                 <DarkModeToggler/> 
-                <Control handleNewArray={handleNewArray} />
+                <Control handleNewArray={handleNewArray} userInputArray={userInputArray} setUserInputArray={setUserInputArray} />
                 <Dropdown selectedOption={selectedOption} handleOptionClick={handleOptionClick}/>
             </div>
               <div className="flex-grow flex justify-center items-center">
