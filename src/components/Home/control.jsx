@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-const Control = ({ handleNewArray, userInputArray, setUserInputArray }) => {
+const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,isSorting}) => {
   return (
     <div className="flex items-center gap-4 ">
       <div className="relative flex items-center">
@@ -32,6 +32,19 @@ const Control = ({ handleNewArray, userInputArray, setUserInputArray }) => {
       >
         Generate New Array
       </button>
+      <label>
+    Speed:
+    <input
+        type="range"
+        min="100"
+        max="200"
+        className="speedControl"
+        onChange={(e) => {
+          console.log(e.target.value)
+          setSpeed(200-e.target.value)}}
+        disabled={isSorting}
+    />
+</label>
     </div>
   );
 };

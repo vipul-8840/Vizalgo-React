@@ -8,7 +8,7 @@ const Layout = ({arr,refs}) => {
             {
                 return <div key={index} 
                 ref={el => refs.current[index] = el}
-                className={`bg-blue-500 dark:bg-gray-500 w-10 rounded-sm transition-all duration-300 `}
+                className={`bg-blue-500 w-10 rounded-sm transition-all duration-300 `}
                 style={{ height: `${item}px`}}>
                         {item}
                 </div>

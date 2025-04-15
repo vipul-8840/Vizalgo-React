@@ -8,6 +8,8 @@ import { bubbleSort } from '../../algorithm/bubbleSort';
 const Home = () => {
     const[arr,setArr]=useState([100,60,80,50]);
     const[userInputArray,setUserInputArray]=useState('');
+    const[speed,setSpeed]=useState(200)
+    const[isSorting,setIsSorting]=useState(false);
     const refs = useRef([]);
     const [selectedOption, setSelectedOption] = useState('Sorting');
     useEffect(()=>{
@@ -25,7 +27,7 @@ const Home = () => {
      function handleNewArray()
      {
       console.log('handle call')
-       const newArr = Array.from({length:20},()=>{
+       const newArr = Array.from({length:10},()=>{
             return Math.floor(Math.random() * 500)
         })
         setArr(newArr)
@@ -55,59 +57,63 @@ const Home = () => {
         {
           case 'Bubble Sort': {
                   resetBars();
-                const animationArr = bubbleSort(arr);
+                const animationArr = bubbleSort(arr,refs,speed,setIsSorting);
                 console.log(animationArr);
-                bubbleAnimation(animationArr);
+                bubbleAnimation(animationArr,speed,isSorting);
                break;
           }
           default :
                    return ;
         }
     };
-    function bubbleAnimation(animation)
-    {
-      console.log(refs);
+    function bubbleAnimation(animation,speed, setIsSorting) {
+        for (let i = 0; i < animation.length; i++) {
+          const step = animation[i];
       
-      for(let i=0;i<animation.length;i++)
-      {
-           let [barOneInd,barTwoInd,swap]=animation[i];
-           let barOne = refs.current[barOneInd];
-           let barTwo = refs.current[barTwoInd];
-           setTimeout(() => {
-            barOne.style.backgroundColor = swap ? 'red' : 'yellow';
-            barTwo.style.backgroundColor = swap ? 'red' : 'yellow';
-
-            if (swap) {
-                const tempHeight = barOne.style.height;
-                barOne.style.height = barTwo.style.height;
-                barTwo.style.height = tempHeight;
-
-                const tempText = barOne.innerText;
-                barOne.innerText = barTwo.innerText;
-                barTwo.innerText = tempText;
+          setTimeout(() => {
+            if (step.type === "compare") {
+              const [i1, i2] = step.indices;
+              refs.current[i1].style.backgroundColor = 'yellow';
+              refs.current[i2].style.backgroundColor = 'yellow';
+            } 
+            else if (step.type === "swap") {
+              const [i1, i2] = step.indices;
+              refs.current[i1].style.backgroundColor = 'red';
+              refs.current[i2].style.backgroundColor = 'red';
+      
+              // Swap height
+              const tempHeight = refs.current[i1].style.height;
+              refs.current[i1].style.height = refs.current[i2].style.height;
+              refs.current[i2].style.height = tempHeight;
+      
+              // Swap innerText
+              const tempText = refs.current[i1].innerText;
+              refs.current[i1].innerText = refs.current[i2].innerText;
+              refs.current[i2].innerText = tempText;
+            } 
+            else if (step.type === "revert") {
+              const [i1, i2] = step.indices;
+              refs.current[i1].style.backgroundColor = 'blue';
+              refs.current[i2].style.backgroundColor = 'blue';
+            } 
+            else if (step.type === "sorted") {
+              const i1 = step.index;
+              refs.current[i1].style.backgroundColor = 'green';
             }
-
-                  setTimeout(() => {
-                      barOne.style.backgroundColor = 'blue';
-                      barTwo.style.backgroundColor = 'blue';
-                  }, 500);
-              }, i * 500);
-            }
-      setTimeout(() => {
-        for (let i = 0; i < refs.current.length; i++) {
-            setTimeout(() => {
-                const bar = refs.current[i];
-                if (bar) bar.style.backgroundColor = 'green';
-            }, i * 100);
+          }, 4*i * speed);
         }
-    }, animation.length * 500 + 100);
-   };
-
+      
+        // After all animation steps, mark sorting as done
+        setTimeout(() => {
+          setIsSorting((prev)=>!prev);
+        }, 4*animation.length * speed + 100);
+      }
+      
   return (
     <div className='min-h-screen'  >
             <div className='flex items-center gap-4 p-4 '>
                 <DarkModeToggler/> 
-                <Control handleNewArray={handleNewArray} userInputArray={userInputArray} setUserInputArray={setUserInputArray} />
+                <Control handleNewArray={handleNewArray} userInputArray={userInputArray} setUserInputArray={setUserInputArray}  setSpeed={setSpeed} isSorting={isSorting} />
                 <Dropdown selectedOption={selectedOption} handleOptionClick={handleOptionClick}/>
             </div>
               <div className="flex-grow flex justify-center items-center">
