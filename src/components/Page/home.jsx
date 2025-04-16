@@ -59,7 +59,7 @@ const Home = () => {
                 bar.style.backgroundColor = 'blue';
             }
         });
-        setIsSpeed(false);
+       
     };
 
     const handleOptionClick = (option) => {
@@ -67,30 +67,30 @@ const Home = () => {
         clearAllTimeouts(); 
         setSelectedOption(option);
         setIsSpeed(true); 
+        
+       let animationArr = [];
         console.log(option)
         switch (option) {
             case 'Bubble Sort': {
-                
-                const animationArr = bubbleSort(arr);
-                Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
+                resetBars();
+                animationArr = bubbleSort(arr);
                 break;
             }
              case 'Selection Sort' :{
-                 
-                const animationArr = selectionSort(arr);
-                Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
+                resetBars();
+                 animationArr = selectionSort(arr);
                 break;
              }
              case 'Insertion Sort' :{
-                 
-                const animationArr = selectionSort(arr);
-                Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
+                resetBars();
+                animationArr = selectionSort(arr);
                 break;
              }
 
             default:
                 return;
         }
+        Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
     };
 
     // function bubbleAnimation(animation, speed, setIsSpeed) {
