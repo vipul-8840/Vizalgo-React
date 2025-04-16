@@ -2,7 +2,7 @@ import React from 'react'
 
 const Layout = ({arr,refs}) => {
   return (
-    <div className='flex items-end gap-2  min-h-5 mt-5 bg-blue dark:bg-gray-700 dark:text-white text-black'>
+    <div className='flex items-end gap-2  mt-5 bg-blue dark:bg-gray-700 dark:text-white text-black'>
      {
         arr.map((item,index)=>
             {

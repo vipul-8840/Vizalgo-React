@@ -6,7 +6,7 @@ const Dropdown = ({handleOptionClick,selectedOption}) => {
 
     const[toggle,setToggle] = useState(false);
    
-    const options = ['Bubble Sort', 'Selection Sort', 'Insertion Sort'];
+    const options = ['Sorting','Bubble Sort', 'Selection Sort', 'Insertion Sort'];
 
     const toggleDropdown = ()=>{
         setToggle((toggle)=>!toggle);

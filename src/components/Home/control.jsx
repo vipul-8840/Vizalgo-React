@@ -2,7 +2,7 @@ import React from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faInfoCircle } from '@fortawesome/free-solid-svg-icons';
 
-const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,isSorting}) => {
+const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,isSpeed,resetBars}) => {
   return (
     <div className="flex items-center gap-4 ">
       <div className="relative flex items-center">
@@ -32,6 +32,9 @@ const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,is
       >
         Generate New Array
       </button>
+         <button className="px-4 py-2 bg-blue-500 text-white rounded-md hover:bg-blue-600 transition duration-300 dark:bg-blue-600 dark:hover:bg-blue-700" onClick={resetBars} >
+                Reset
+            </button>
       <label>
     Speed:
     <input
@@ -42,7 +45,7 @@ const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,is
         onChange={(e) => {
           console.log(e.target.value)
           setSpeed(200-e.target.value)}}
-        disabled={isSorting}
+        disabled={isSpeed}
     />
 </label>
     </div>
