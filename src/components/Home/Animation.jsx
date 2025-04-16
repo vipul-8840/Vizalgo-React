@@ -1,4 +1,6 @@
-export function Animation(animation, speed, setIsSpeed,refs,timeoutIds) {
+
+//animation function implemented 
+export  function Animation(animation, speed, setIsSpeed,refs,timeoutIds) {
     for (let i = 0; i < animation.length; i++) {
         const step = animation[i];
         const timeoutId = setTimeout(() => {
