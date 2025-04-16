@@ -39,12 +39,12 @@ const Control = ({ handleNewArray, userInputArray, setUserInputArray,setSpeed,is
     Speed:
     <input
         type="range"
-        min="100"
-        max="200"
+        min="200"
+        max="250"
         className="speedControl"
         onChange={(e) => {
-          console.log(e.target.value)
-          setSpeed(200-e.target.value)}}
+         
+          setSpeed(300-e.target.value)}}
         disabled={isSpeed}
     />
 </label>

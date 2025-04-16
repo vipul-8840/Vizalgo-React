@@ -34,14 +34,14 @@ export function bubbleSort(arr) {
         
         animation.push({
             type: "sorted",
-            index: n - 1 - i
+            indices: n - 1 - i
         });
     }
 
   
     animation.push({
         type: "sorted",
-        index: 0
+        indices: 0
     });
 
     return animation;

@@ -1,50 +1,49 @@
-export function selectionSort({arr,ref,speed})
-{
-    let animation = [];
-    let tempArray = [...arr];
-    let n = tempArray.length;
-    let i = 0;
-    let j = 0;
-    for( i=0;i<n;i++)
-    {
-       let  minIndex = i;
-        for( j=i+1;j<n;j++)
-        {
-             animation.push({
-                type:'compare',
-                indices:[i,j]
-             })
-             if(tempArray[j]<tempArray[i])
-             {
-                minIndex = j;
-             }
-        }
-        if(minIndex!=i)
-        {
-            animation.push({
-                type:'swap',
-                indices:[i,j]
-            })
-            let temp = tempArray[j];
-            tempArray[i] = tempArray[j];
-            tempArray[j] = temp;
-        }
-        else{
-                    animation.push({
-                        type: "revert",
-                        indices: [i, j ]
-                    });
-             
-        }
-        animation.push({
-            type:"sorted",
-            indices :i
-        })
+export function selectionSort(arr) {
+    const animation = [];
+    const tempArray = [...arr];
+    const n = tempArray.length;
 
+    for (let i = 0; i < n - 1; i++) {
+        let minIndex = i;
+
+        for (let j = i + 1; j < n; j++) {
+            animation.push({
+                type: 'compare',
+                indices: [minIndex, j],
+            });
+
+            if (tempArray[j] < tempArray[minIndex]) {
+                minIndex = j;
+            }
+
+            animation.push({
+                type: 'revert',
+                indices: [minIndex, j],
+            });
+        }
+
+        if (minIndex !== i) {
+            animation.push({
+                type: 'swap',
+                indices: [i, minIndex],
+            });
+
+            const temp = tempArray[i];
+            tempArray[i] = tempArray[minIndex];
+            tempArray[minIndex] = temp;
+        }
+
+        animation.push({
+            type: 'sorted',
+            indices: [i],
+        });
     }
+
+   
     animation.push({
-        type:"sorted",
-        indices :n-1
-    })
-   return animation;
+        type: 'sorted',
+        indices: [n - 1],
+    });
+
+    return animation;
 }

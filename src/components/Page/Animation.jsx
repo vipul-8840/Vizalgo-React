@@ -1,5 +1,3 @@
-
-//animation function implemented 
 export  function Animation(animation, speed, setIsSpeed,refs,timeoutIds) {
     for (let i = 0; i < animation.length; i++) {
         const step = animation[i];
@@ -28,7 +26,7 @@ export  function Animation(animation, speed, setIsSpeed,refs,timeoutIds) {
                 refs.current[i2].style.backgroundColor = 'blue';
             }
             else if (step.type === "sorted") {
-                const i1 = step.index;
+                const i1 = step.indices;
                 refs.current[i1].style.backgroundColor = 'green';
             }
         }, 4 * i * speed);

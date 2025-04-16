@@ -81,6 +81,12 @@ const Home = () => {
                 Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
                 break;
              }
+             case 'Insertion Sort' :{
+                 
+                const animationArr = selectionSort(arr);
+                Animation(animationArr, speed, setIsSpeed,refs,timeoutIds);
+                break;
+             }
 
             default:
                 return;

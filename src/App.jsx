@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import DarkModeToggler from './components/toggle'
-import Home from './components/Home/home'
+import Home from './components/Page/home'
 import { ThemeProvider } from './context/context'
 
 function App() {
